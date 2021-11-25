@@ -1,6 +1,5 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
-
-const { JWT_SECRET } = require('../config');
 
 /**
  *
@@ -9,7 +8,7 @@ const { JWT_SECRET } = require('../config');
  * @returns {String}
  */
 function generateAccessToken(id, role) {
-  return jwt.sign({ id, role }, JWT_SECRET, { expiresIn: '1d' });
+  return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '1d' });
 }
 
 /**
@@ -18,7 +17,7 @@ function generateAccessToken(id, role) {
  * @returns {{ id: Number, role: String }}
  */
 function verifyAccessToken(token) {
-  return jwt.verify(token, JWT_SECRET);
+  return jwt.verify(token, process.env.JWT_SECRET);
 }
 
 module.exports = {

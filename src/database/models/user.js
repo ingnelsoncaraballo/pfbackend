@@ -45,10 +45,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: null,
     },
-    active: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-    },
     role: {
       type: DataTypes.ENUM,
       values: Object.values(ROLES),

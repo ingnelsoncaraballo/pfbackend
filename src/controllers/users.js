@@ -7,6 +7,7 @@ const UsersSerializer = require('../serializers/UsersSerializer');
 const { generateAccessToken } = require('../services/jwt');
 
 const { ROLES } = require('../config/constants');
+const constants = require('../config/constants');
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -41,6 +42,7 @@ const createUser = async (req, res, next) => {
       email: body.email,
       name: body.name,
       password: body.password,
+      role: body.role ? body.role : constants.ROLES.regular,
     });
 
     res.json(new UserSerializer(user));
@@ -79,14 +81,10 @@ const updateUser = async (req, res, next) => {
       throw new ApiError('Payload can only contain username, email or name', 400);
     }
 
-    const userUpdated = await User.update({ where: { id: params.id } }, body);
+    const userUpdated = await User.update(body, { where: { id: params.id } });
 
     if (userUpdated) {
-      if (userUpdated.active === undefined || userUpdated.active) {
-        res.json(new UserSerializer(userUpdated));
-      } else if (userUpdated.active === false) {
-        throw new ApiError('User not found', 400);
-      }
+      res.json(new UserSerializer(null));
     } else {
       throw new ApiError('User not found', 400);
     }
@@ -117,11 +115,7 @@ const deactivateUser = async (req, res, next) => {
     const user = await User.findOne({ where: { id: params.id } });
     if (user) {
       if (user.active === undefined || user.active) {
-        const userDeactivated = await User.update(
-          { where: { id: params.id } },
-          { active: false },
-        );
-
+        const userDeactivated = await user.destroy();
         res.json(new UserSerializer(null));
       } else {
         throw new ApiError('success', 200);

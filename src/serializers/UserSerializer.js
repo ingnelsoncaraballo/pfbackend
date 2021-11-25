@@ -5,7 +5,6 @@ class UserSerializer extends BaseSerializer {
     const serializedModel = model ? model.toJSON() : null;
 
     delete serializedModel?.password;
-    delete serializedModel?.active;
 
     super('success', serializedModel);
   }
