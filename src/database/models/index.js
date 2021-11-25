@@ -7,9 +7,16 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(`${__dirname}/../config`)[env];
+require('dotenv').config();
+
 const db = {};
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(
+  process.env.DATABASE,
+  process.env.USERNAME,
+  process.env.PASSWORD,
+  config,
+);
 
 fs
   .readdirSync(__dirname)
