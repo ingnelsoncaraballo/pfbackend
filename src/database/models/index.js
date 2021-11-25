@@ -15,7 +15,7 @@ const sequelize = new Sequelize(
   process.env.DATABASE,
   process.env.USERNAME,
   process.env.PASSWORD,
-  config,
+  { host: process.env.HOST, dialect: 'postgres' },
 );
 
 fs
