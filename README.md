@@ -24,3 +24,7 @@ npm run test
 ```bash
 npm run linter
 ```
+## Run test
+![Image text](https://github.com/elcontreras/pfbackend/blob/main/npm%20run%20test.png)
+## Run linter
+![Image text](https://github.com/elcontreras/pfbackend/blob/main/npm%20run%20linter.png)
