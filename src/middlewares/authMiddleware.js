@@ -23,6 +23,8 @@ function authMiddleware(req, res, next) {
       }
     };
 
+    // const user_id = (userId) => user.id;
+
     req.user = user;
     req.isRole = isRole;
     req.isUserAuthorized = isUserAuthorized;
